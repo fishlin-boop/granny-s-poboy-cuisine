@@ -6,16 +6,16 @@
     <title>Granny's Poboy Cuisine | Online Ordering</title>
     <style>
         :root {
-            --primary: #8B4513; /* Dark Brown */
-            --secondary: #D2B48C; /* Tan */
-            --dark: #2C221E; /* Dark Text */
-            --light: #FDF9F3; /* Off-White */
-            --accent: #C0392B; /* Red */
-            --gold: #D4AC0D; /* Gold */
+            --primary: #8B4513;
+            --secondary: #D2B48C;
+            --dark: #2C221E;
+            --light: #FDF9F3;
+            --accent: #C0392B;
+            --gold: #D4AC0D;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-image: url('image_3.png'); /* Crumpled paper background */
+            background-image: url('image_d38c41.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -24,10 +24,10 @@
             padding: 0;
         }
         header {
-            background: rgba(139, 69, 19, 0.9); /* Semi-transparent brown header */
+            background: rgba(139, 69, 19, 0.95);
             color: white;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem;
             border-bottom: 5px solid var(--gold);
             display: flex;
             flex-direction: column;
@@ -35,8 +35,11 @@
             gap: 1rem;
         }
         header img {
-            max-width: 150px; /* Size the logo */
+            max-width: 150px;
             height: auto;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
         header h1 {
             margin: 0;
@@ -81,7 +84,7 @@
             gap: 1.5rem;
         }
         .menu-card {
-            background: rgba(255, 255, 255, 0.95); /* Semi-transparent white card */
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -161,12 +164,12 @@
             background-color: #fff3cd;
             color: #856404;
             border: 1px solid #ffeeba;
-            padding: 1rem;
+            padding: 0.75rem;
             border-radius: 6px;
             margin-bottom: 1.5rem;
-            font-weight: bold;
+            font-size: 0.85rem;
             text-align: center;
-            font-size: 1rem;
+            line-height: 1.4;
         }
         .cart-items-list {
             list-style: none;
@@ -236,12 +239,46 @@
             text-align: center;
             margin: 3rem 0;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+        .modal-content p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="image_0.png" alt="Granny's Poboy Cuisine Logo">
+        <img src="image_d30c24.jpg" alt="Granny's Poboy Cuisine Logo">
         <h1>Granny's Poboy Cuisine</h1>
         <p>Authentic Louisiana flavor straight to your pickup window. Grab a napkin, you're gonna need it!</p>
     </header>
@@ -281,7 +318,7 @@
                 <h2>The Real Deal Po'boys</h2>
                 <div class="menu-grid">
                     <div class="menu-card">
-                        <img src="image_2.png" alt="Classic Roast Beef Poboy" class="card-img-top">
+                        <img src="image_d38840.jpg" alt="Classic Roast Beef Poboy" class="card-img-top">
                         <div class="card-content">
                             <h3>Classic Roast Beef Po'boy</h3>
                             <p class="description">Slow-cooked roast beef debris drowning in rich, savory gravy. It's messy, it's glorious, and it's on authentic Leidenheimer French bread.</p>
@@ -333,8 +370,28 @@
                 <div class="menu-grid">
                     <div class="menu-card">
                         <div class="card-content">
+                            <h3>Fresh Fryer Chicken Plate</h3>
+                            <p class="description">Straight out of the roaring hot oil—crispy-skinned Southern fried chicken pieces served alongside garlic mashed potatoes and collard greens.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$15.00</span>
+                            <button onclick="addToCart('Fresh Fryer Chicken Plate', 15.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Grilled Chicken Breast Plate</h3>
+                            <p class="description">Marinated, herb-rubbed chicken breast flame-grilled to perfection, served with seasonal vegetables and a side of red beans and rice.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$14.50</span>
+                            <button onclick="addToCart('Grilled Chicken Breast Plate', 14.50)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
                             <h3>Crawfish Etouffee</h3>
-                            <p class="description">A rich, buttery, dark roux loaded with plump tail meat simmered to perfection, served over a generous mountain of white rice. A Cajun classic.</p>
+                            <p class="description">A rich, buttery, dark roux loaded with plump tail meat simmered to perfection, served over a generous mountain of white rice.</p>
                         </div>
                         <div class="card-footer">
                             <span class="price">$16.00</span>
@@ -343,22 +400,12 @@
                     </div>
                     <div class="menu-card">
                         <div class="card-content">
-                            <h3>Fried Chicken Dinner (3-piece)</h3>
-                            <p class="description">Three pieces of Granny's secret-recipe fried chicken, crispy outside and juicy inside. Served with a side of mac and cheese and a corn muffin.</p>
+                            <h3>Smothered Oxtail Plate</h3>
+                            <p class="description">Slow-braised oxtails falling off the bone in a deep, rich gravy served over buttered white rice with a side of lima beans.</p>
                         </div>
                         <div class="card-footer">
-                            <span class="price">$14.50</span>
-                            <button onclick="addToCart('Fried Chicken Dinner (3-piece)', 14.50)">Add to Order</button>
-                        </div>
-                    </div>
-                    <div class="menu-card">
-                        <div class="card-content">
-                            <h3>Red Beans & Rice with Smoked Sausage</h3>
-                            <p class="description">Creamy, slow-cooked red beans with thick slices of grilled smoked sausage, served over long-grain white rice with a side of cornbread.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="price">$11.50</span>
-                            <button onclick="addToCart('Red Beans & Rice with Smoked Sausage', 11.50)">Add to Order</button>
+                            <span class="price">$18.50</span>
+                            <button onclick="addToCart('Smothered Oxtail Plate', 18.50)">Add to Order</button>
                         </div>
                     </div>
                 </div>
@@ -381,7 +428,7 @@
                     <div class="menu-card">
                         <div class="card-content">
                             <h3>Curly Fries</h3>
-                            <p class="description">Seasoned, spiraled crispy fries. Fun to eat and perfectly seasoned!</p>
+                            <p class="description">Seasoned, spiraled crispy fries. Fun to eat, perfectly seasoned, and extra crispy!</p>
                         </div>
                         <div class="card-footer">
                             <span class="price">$5.00</span>
@@ -389,10 +436,10 @@
                         </div>
                     </div>
                     <div class="menu-card">
-                        <img src="image_1.png" alt="Corn Muffins" class="card-img-top">
+                        <img src="image_d387c4.jpg" alt="Corn Muffins" class="card-img-top">
                         <div class="card-content">
                             <h3>Jalapeno Cheddar Corn Muffins (2-pack)</h3>
-                            <p class="description">Freshly baked, moist corn muffins kicked up with diced jalapenos and sharp cheddar cheese. A perfect companion to any plate.</p>
+                            <p class="description">Freshly baked, moist corn muffins kicked up with diced jalapenos and sharp cheddar cheese.</p>
                         </div>
                         <div class="card-footer">
                             <span class="price">$5.50</span>
@@ -400,4 +447,217 @@
                         </div>
                     </div>
                     <div class="menu-card">
-                        <div class
+                        <div class="card-content">
+                            <h3>Macaroni and Cheese</h3>
+                            <p class="description">Baked elbow macaroni smothered in a rich, three-cheese blend with a golden crust on top.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$4.75</span>
+                            <button onclick="addToCart('Macaroni and Cheese', 4.75)">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Drinks -->
+            <div class="category-section">
+                <h2>Drinks & Refreshments</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Fresh Squeezed Lemonade</h3>
+                            <p class="description">Tart, sweet, and ice-cold lemonade made fresh every morning with real Louisiana lemons.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$3.50</span>
+                            <button onclick="addToCart('Fresh Squeezed Lemonade', 3.50)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Cold Whole Milk / Chocolate Milk</h3>
+                            <p class="description">A cold, refreshing glass of farm-fresh whole milk or rich chocolate milk.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$2.75</span>
+                            <button onclick="addToCart('Cold Milk', 2.75)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Sweet Iced Tea</h3>
+                            <p class="description">Classic southern sweet tea brewed strong and chilled over plenty of ice.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$3.00</span>
+                            <button onclick="addToCart('Sweet Iced Tea', 3.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Abita Root Beer</h3>
+                            <p class="description">Louisiana-brewed craft root beer made with pure cane sugar.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$3.00</span>
+                            <button onclick="addToCart('Abita Root Beer', 3.00)">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Kids Menu -->
+            <div class="category-section">
+                <h2>Granny's Character-Builder Kids Menu</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Kid's Roast Beef Poboy</h3>
+                            <p class="description">Half-sized portion with tender roast beef and minimal gravy to save your clothes.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$7.50</span>
+                            <button onclick="addToCart('Kid\'s Roast Beef Poboy', 7.50)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Mustard Greens & Cornbread</h3>
+                            <p class="description">Bitter, pungent greens infused with liquid smoke. Granny insists this cleans out your system.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$5.00</span>
+                            <button onclick="addToCart('Mustard Greens & Cornbread', 5.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Cold Canned Asparagus Spears</h3>
+                            <p class="description">Limp, metallic-tasting green stalks straight from a pull-tab tin.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$4.00</span>
+                            <button onclick="addToCart('Cold Canned Asparagus Spears', 4.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Warm Buttermilk Cup</h3>
+                            <p class="description">A plain glass of thick, sour-tasting fermented milk that Granny claims helps your bones grow.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$3.00</span>
+                            <button onclick="addToCart('Warm Buttermilk Cup', 3.00)">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Cart Sidebar -->
+        <div class="cart-sidebar">
+            <h2>Your Order Tab</h2>
+            <div class="fake-order-note">
+                ⚠️ <strong>Note:</strong> This is a roleplay menu only. All purchases are completely fake and simulated!
+            </div>
+            <ul id="cart-list" class="cart-items-list">
+                <div class="empty-cart">Your cart is currently empty. Pick something tasty!</div>
+            </ul>
+            
+            <div class="cart-total-section">
+                <div class="total-row">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </div>
+
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <h3>Order Received!</h3>
+            <p>Granny is yelling at the back crew to fire up the fryers now. Keep your ears open for your pickup ticket number!</p>
+            <button onclick="closeModal()">Awesome, Thanks!</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(name) {
+            const index = cart.findIndex(item => item.name === name);
+            if (index !== -1) {
+                cart[index].quantity -= 1;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartList = document.getElementById('cart-list');
+            const cartTotal = document.getElementById('cart-total');
+
+            cartList.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<div class="empty-cart">Your cart is currently empty. Pick something tasty!</div>';
+                cartTotal.innerText = '$0.00';
+                return;
+            }
+
+            let total = 0;
+
+            cart.forEach(item => {
+                let itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <div class="cart-item-details">
+                        <span class="cart-item-title">${item.name} (x${item.quantity})</span>
+                        <span class="cart-item-price">$${itemTotal.toFixed(2)}</span>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button onclick="removeFromCart('${item.name}')">-</button>
+                        <button onclick="addToCart('${item.name}', ${item.price})">+</button>
+                    </div>
+                `;
+                cartList.appendChild(li);
+            });
+
+            cartTotal.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Hold your horses! Add some food to your tab before checking out.");
+                return;
+            }
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+            cart = [];
+            updateCartUI();
+        }
+    </script>
+
+</body>
+</html>
