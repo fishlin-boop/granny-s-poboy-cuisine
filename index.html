@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granny's Poboy Cuisine | Online Ordering</title>
+    <style>
+        :root {
+            --primary: #8B4513; /* Dark Brown */
+            --secondary: #D2B48C; /* Tan */
+            --dark: #2C221E; /* Dark Text */
+            --light: #FDF9F3; /* Off-White */
+            --accent: #C0392B; /* Red */
+            --gold: #D4AC0D; /* Gold */
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('image_3.png'); /* Crumpled paper background */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: rgba(139, 69, 19, 0.9); /* Semi-transparent brown header */
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 5px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        header img {
+            max-width: 150px; /* Size the logo */
+            height: auto;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+        }
+        header p {
+            margin: 0.5rem 0 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        .main-layout {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+        }
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        .category-section h2 {
+            color: var(--primary);
+            border-bottom: 4px solid var(--secondary);
+            padding-bottom: 0.75rem;
+            margin-top: 0;
+            font-size: 2rem;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .menu-card {
+            background: rgba(255, 255, 255, 0.95); /* Semi-transparent white card */
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-top: 5px solid var(--primary);
+            transition: transform 0.2s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .card-content h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+        .card-content .description {
+            font-size: 0.95rem;
+            color: #555;
+            margin: 0 0 1.25rem 0;
+            line-height: 1.5;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        .price {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #65320e;
+        }
+        
+        /* Cart Sidebar */
+        .cart-sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+            border-top: 5px solid var(--accent);
+        }
+        .cart-sidebar h2 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 3px solid #eee;
+            padding-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        .fake-order-note {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .cart-items-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1rem;
+        }
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-item-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .cart-item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .cart-item-controls button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.9rem;
+            background-color: #777;
+        }
+        .cart-item-controls button:hover {
+            background-color: var(--accent);
+        }
+        .cart-total-section {
+            border-top: 3px solid #eee;
+            padding-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        .checkout-btn {
+            width: 100%;
+            background-color: #27ae60;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+        }
+        .checkout-btn:hover {
+            background-color: #219653;
+        }
+        .empty-cart {
+            color: #888;
+            font-style: italic;
+            text-align: center;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="image_0.png" alt="Granny's Poboy Cuisine Logo">
+        <h1>Granny's Poboy Cuisine</h1>
+        <p>Authentic Louisiana flavor straight to your pickup window. Grab a napkin, you're gonna need it!</p>
+    </header>
+
+    <div class="main-layout">
+        <div class="menu-container">
+            
+            <!-- Category: Specials -->
+            <div class="category-section">
+                <h2>🔥 Granny's Weekly Specials</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Debris Fries Supreme</h3>
+                            <p class="description">Crispy Cajun fries smothered in shredded roast beef debris, melted provolone cheese, and Granny's special brown gravy. A fork-and-knife kind of side!</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$11.00</span>
+                            <button onclick="addToCart('Debris Fries Supreme', 11.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Smothered Pork Chop Po'boy</h3>
+                            <p class="description">A massive, fork-tender fried pork chop on French bread, drenched in Granny's dark onion gravy with lettuce and tomato. Our Sunday best, available all week!</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$15.50</span>
+                            <button onclick="addToCart('Smothered Pork Chop Po\'boy', 15.50)">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: The Po'boys -->
+            <div class="category-section">
+                <h2>The Real Deal Po'boys</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <img src="image_2.png" alt="Classic Roast Beef Poboy" class="card-img-top">
+                        <div class="card-content">
+                            <h3>Classic Roast Beef Po'boy</h3>
+                            <p class="description">Slow-cooked roast beef debris drowning in rich, savory gravy. It's messy, it's glorious, and it's on authentic Leidenheimer French bread.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$12.50</span>
+                            <button onclick="addToCart('Classic Roast Beef Po\'boy', 12.50)">Add to Order</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Fried Shrimp Po'boy</h3>
+                            <p class="description">Golden-fried Gulf shrimp piled high on dressed French bread with lettuce, tomato, pickles, and homemade tangy remoulade sauce.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$14.00</span>
+                            <button onclick="addToCart('Fried Shrimp Po\'boy', 14.00)">Add to Order</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Fried Catfish Po'boy</h3>
+                            <p class="description">Cornmeal-crusted local catfish fillet fried to a perfect crunch, topped with creamy tartar sauce and pickles.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$13.50</span>
+                            <button onclick="addToCart('Fried Catfish Po\'boy', 13.50)">Add to Order</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Hot Sausage Po'boy</h3>
+                            <p class="description">Two grilled, spicy patties of authentic New Orleans hot sausage on Leidenheimer bread, fully dressed with our housemade sauce.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$12.00</span>
+                            <button onclick="addToCart('Hot Sausage Po\'boy', 12.00)">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Hot Plates -->
+            <div class="category-section">
+                <h2>Granny's Hot Plates</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Crawfish Etouffee</h3>
+                            <p class="description">A rich, buttery, dark roux loaded with plump tail meat simmered to perfection, served over a generous mountain of white rice. A Cajun classic.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$16.00</span>
+                            <button onclick="addToCart('Crawfish Etouffee', 16.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Fried Chicken Dinner (3-piece)</h3>
+                            <p class="description">Three pieces of Granny's secret-recipe fried chicken, crispy outside and juicy inside. Served with a side of mac and cheese and a corn muffin.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$14.50</span>
+                            <button onclick="addToCart('Fried Chicken Dinner (3-piece)', 14.50)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Red Beans & Rice with Smoked Sausage</h3>
+                            <p class="description">Creamy, slow-cooked red beans with thick slices of grilled smoked sausage, served over long-grain white rice with a side of cornbread.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$11.50</span>
+                            <button onclick="addToCart('Red Beans & Rice with Smoked Sausage', 11.50)">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Sides -->
+            <div class="category-section">
+                <h2>On the Side</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Cajun Fries</h3>
+                            <p class="description">Crispy French fries heavily dusted with Granny's own secret Cajun spice blend.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$4.50</span>
+                            <button onclick="addToCart('Cajun Fries', 4.50)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-content">
+                            <h3>Curly Fries</h3>
+                            <p class="description">Seasoned, spiraled crispy fries. Fun to eat and perfectly seasoned!</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$5.00</span>
+                            <button onclick="addToCart('Curly Fries', 5.00)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <img src="image_1.png" alt="Corn Muffins" class="card-img-top">
+                        <div class="card-content">
+                            <h3>Jalapeno Cheddar Corn Muffins (2-pack)</h3>
+                            <p class="description">Freshly baked, moist corn muffins kicked up with diced jalapenos and sharp cheddar cheese. A perfect companion to any plate.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">$5.50</span>
+                            <button onclick="addToCart('Jalapeno Cheddar Corn Muffins (2-pack)', 5.50)">Add to Order</button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class
